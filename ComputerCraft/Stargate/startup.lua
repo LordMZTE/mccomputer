@@ -17,7 +17,7 @@ end
 while true do
     mon.clear()
     mon.setCursorPos(1, 1)
-    shell.run("monitor top info")
+    shell.run("monitor " .. monName .. " info")
 
     term.clear()
     term.setCursorPos(1, 1)

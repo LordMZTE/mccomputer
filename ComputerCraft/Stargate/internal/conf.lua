@@ -1,4 +1,9 @@
 --Add Peripherals Here
-sg = peripheral.wrap("stargate_0")
-mon = peripheral.wrap("top")
-prnt = peripheral.wrap("left")
+sgName = "stargate_0"
+monName = "top"
+prntName = "left"
+
+--Dont Change This
+sg = peripheral.wrap(sgName)
+mon = peripheral.wrap(monName)
+prnt = peripheral.wrap(prntName)
