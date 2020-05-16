@@ -13,10 +13,20 @@ print("P/U/J = Place/Up/Down")
 print("1-9 = Select Slot")
 print("F = Refuel")
 print("I = Show Inventory")
+print("E = Empty Inventory")
 
 function send(msg)
     msg = string.dump(msg)
     rednet.send(turtleID, msg, "rcturtle")
+end
+
+function setSlot(num)
+    send(function()
+        local id, val = rednet.receive()    
+        turtle.select(val)
+        sendRemote(val)
+    end)
+    rednet.send(turtleID, num)
 end
 
 while true do
@@ -104,17 +114,34 @@ while true do
                         end
                     end
                 end)
+            elseif key == keys.e then
+                send(function()
+                    for i = 1, 16 do
+                        turtle.select(i)
+                        turtle.drop()
+                        sendRemote(i)
+                    end
+                end)
             end
         end,
         function()
             local event, char = os.pullEvent("char")
-            if tonumber(char) then
-                send(function()
-                    local id, val = rednet.receive()
-                    turtle.select(val)
-                    sendRemote(val)
-                end)
-                rednet.send(turtleID, tonumber(char))
+            if char == '0' then
+                setSlot(10)
+            elseif char == '/' then    
+                setSlot(11)
+            elseif char == '*' then
+                setSlot(12)
+            elseif char == '-' then
+                setSlot(13)
+            elseif char == '+' then 
+                setSlot(14)
+            elseif char == ',' then
+                setSlot(15)
+            elseif char == '.' then
+                setSlot(16)
+            elseif tonumber(char) then
+                setSlot(tonumber(char))
             end
         end    
      )
